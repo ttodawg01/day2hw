@@ -19,5 +19,6 @@
     {{ form.address(class = 'form-control', placeholder= 'Enter Address') }}
 
     {{ form.submit(class='btn btn-primary mt-3 w-100') }}
+    {{ form.csrf_token }}
 </form>
 {% endblock %}

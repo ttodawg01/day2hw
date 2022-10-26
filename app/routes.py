@@ -1,25 +1,20 @@
-
-# from re import L
 from flask import render_template, redirect, url_for, flash
 from app import app
 from app.forms import SignUpForm
 
 
-@app.route('/index')
+@app.route('/')
 def index():
     return render_template('index.html')
 
 
-@app.route('/')
-def base():
-    return render_template('base.html')
 
-
-@app.route('/form', methods=['GET', 'POST'])
+@app.route('/form', methods=["GET", "POST"])
 def signup():
     form = SignUpForm()
     if form.validate_on_submit():
         print('Form Submitted')
+        # print(form.errors)
 
         first_name = form.first_name.data
         last_name = form.last_name.data
