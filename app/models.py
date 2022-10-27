@@ -14,4 +14,4 @@ class User(db.Model):
     #     super(),__init__()
 
     def __str__(self):
-        return self.User
+        return self.username
