@@ -1,9 +1,20 @@
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+
+from config import Config
 
 
 app = Flask(__name__)
-#add a SECRET_KEY to the app config
-app.config['SECRET_KEY'] = 'you-will-never-ever-EVER-gain-access'
+# add a SECRET_KEY to the app config
+
+# app.config['SECRET_KEY'] = 'you-will-never-guess'
 
 
-from . import routes
+app.config.from_object(Config)
+
+db = SQLAlchemy(app)
+
+migrate = Migrate(app, db, render_as_batch = True)
+
+from . import routes, models
