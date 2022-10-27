@@ -10,8 +10,8 @@ class User(db.Model):
     address = db.Column(db.String(80), unique=True, nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default = datetime.utcnow)
 
-    # def __repr__(self):
-    #     return '<User %r>' % self.username
+    # def __init__(self, **kwargs):
+    #     super(),__init__()
 
-    # def __repr__(self):
-    #     return '<User %r>' % self.username
+    def __str__(self):
+        return self.User
