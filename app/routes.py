@@ -28,7 +28,7 @@ def signup():
         phone_number=phone_number, address=address)
 
         #flash a success message
-        flash(f'You have successfully signed up!')
+        flash(f'{new_user} have successfully signed up!')
 
         return redirect(url_for('index'))
     return render_template('form.html', form=form)

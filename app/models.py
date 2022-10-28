@@ -13,5 +13,11 @@ class User(db.Model):
     # def __init__(self, **kwargs):
     #     super(),__init__()
 
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        db.session.add(self)
+        db.session.commit()
+
     def __str__(self):
-        return self.username
+        return self.first_name
