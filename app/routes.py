@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, flash
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 from app import app
 from app.forms import SignUpForm, LogInForm
 from app.models import User
@@ -7,6 +7,7 @@ from app.models import User
 
 @app.route('/')
 def index():
+    print(current_user)
     return render_template('index.html')
 
 
