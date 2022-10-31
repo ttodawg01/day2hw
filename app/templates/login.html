@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Log In{% endblock %}
+
+{% block content %}
+<form class="bg-white p-5 rounded mt-3" action="" method="POST">
+    <h1 class="text-center">Log In</h1>
+    {{ form.first_name.label }}
+    {{ form.first_name(class = 'form-control', placeholder= 'Enter First name') }}
+
+    {{ form.address.label }}
+    {{ form.address(class = 'form-control', placeholder= 'Enter Address') }}
+
+    {{ form.submit(class='btn btn-primary mt-3 w-100') }}
+    {{ form.csrf_token }}
+</form>
+{% endblock content %}
