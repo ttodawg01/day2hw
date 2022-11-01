@@ -14,3 +14,7 @@ class LogInForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])
     address = StringField('Address', validators=[DataRequired()])
     submit = SubmitField()
+
+class AddressForm(FlaskForm):
+    address = StringField('Address', validators=[DataRequired()])
+    submit = SubmitField()

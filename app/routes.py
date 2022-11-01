@@ -1,8 +1,8 @@
 from flask import render_template, redirect, url_for, flash
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user, current_user, login_required
 from app import app
-from app.forms import SignUpForm, LogInForm
-from app.models import User
+from app.forms import SignUpForm, LogInForm, AddressForm
+from app.models import User, Address
 
 
 @app.route('/')
@@ -69,3 +69,20 @@ def logout():
     logout_user()
     flash('You have been logged out', 'info')
     return redirect(url_for('index'))
+
+
+
+@app.route('/create', methods=['GET', 'POST'])
+@login_required
+def create():
+    form = AddressForm()
+    if form.validate_on_submit():
+        #get data from the form
+        address = form.address.data
+        #create a new instance of address with the info from the form
+        new_address = Address(address=address, user_id=current_user.id)
+        #flash a message of success
+        flash(f"{new_address} has been created", "success")
+        #redirect back to the homepage
+        return redirect(url_for('index'))
+    return render_template('create.html', form=form)

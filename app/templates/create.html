@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Address{% endblock %}
+
+{% block content %}
+<form action="" class="bg-white p-5 rounded mt-3" method="POST">
+    <h1 class="text-center">Create New Address</h1>
+
+    {{ form.address.label }}
+    {{ form.address(class = 'form-control', placeholder= 'Enter Address') }}
+
+    {{ form.submit(class='btn btn-primary mt-3 w-100') }}
+    {{ form.csrf_token }}
+</form>
+{% endblock content %}

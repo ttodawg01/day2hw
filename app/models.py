@@ -10,6 +10,7 @@ class User(db.Model, UserMixin):
     phone_number = db.Column(db.String(80), unique=True, nullable=False)
     address = db.Column(db.String(80), unique=True, nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default = datetime.utcnow)
+    posts = db.relationship('Address', backref='author', lazy= 'dynamic')
 
     # def __init__(self, **kwargs):
     #     super(),__init__()
@@ -26,3 +27,16 @@ class User(db.Model, UserMixin):
 @login.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
+
+#create a address model --One To Many.. One user to many addresses
+
+class Address(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    address = db.Column(db.String(80), nullable=False)
+    date_created = db.Column(db.DateTime, nullable=False, default = datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        db.session.add(self)
+        db.session.commit()

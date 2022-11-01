@@ -13,6 +13,7 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 #create an instance of loginmanager to let our app have login capability
 login = LoginManager(app)
+login.login_view = 'login'
 
 migrate = Migrate(app, db, render_as_batch = True)
 
