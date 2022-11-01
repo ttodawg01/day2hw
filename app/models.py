@@ -40,3 +40,16 @@ class Address(db.Model):
         super().__init__(**kwargs)
         db.session.add(self)
         db.session.commit()
+
+
+    #update method for the address object
+    def update(self, **kwargs):
+        for key, value in kwargs.items():
+            if key in {'address'}:
+                setattr(self, key, value)
+        db.session.commit()
+
+     # Delete post from database
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()

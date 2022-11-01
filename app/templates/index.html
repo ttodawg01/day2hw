@@ -8,4 +8,22 @@
     {% else %}
         <h1 class="text-center">Hello, Please Sign up or Log in to use the address book</h1>
     {% endif %}
+
+    {% for address in addresses %}
+    <div class="card my-3">
+        <div class="card-header">
+          
+        </div>
+        <div class="card-body">
+          <blockquote class="blockquote mb-0">
+            <p>{{ address.address }}</p>
+            <footer class="blockquote-footer">{{ address.author }} <cite title="Source Title">{{ address.date_created }}</cite></footer>
+          </blockquote>
+          <a href="{{ url_for('get_address', address_id=address.id) }}" class="btn btn-primary mt-2">See More</a>
+          {% if address.author == current_user %}
+          <a href="{{ url_for('edit_post', address_id=address.id)}}" class="btn btn-success mt-2">Edit</a>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
 {% endblock content %}

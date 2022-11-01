@@ -7,8 +7,8 @@ from app.models import User, Address
 
 @app.route('/')
 def index():
-    print(current_user)
-    return render_template('index.html')
+    addresses = Address.query.order_by(Address.date_created.desc()).all()
+    return render_template('index.html', addresses=addresses)
 
 
 
@@ -86,3 +86,47 @@ def create():
         #redirect back to the homepage
         return redirect(url_for('index'))
     return render_template('create.html', form=form)
+
+
+@app.route('/addresses/<address_id>')
+def get_address(address_id):
+    address = Address.query.get_or_404(address_id)
+    if not address:
+        flash(f"Address with {address_id} does not exist", "warning")
+        return redirect(url_for('index'))
+    return render_template('address.html', address=address)
+
+
+@app.route('/addresses/<address_id>/edit', methods=['GET', 'POST'])
+def edit_post(address_id):
+    address = Address.query.get_or_404(address_id)
+    if not address:
+        flash(f"Address with {address_id} does not exist", "warning")
+        return redirect(url_for('index'))
+    if address.author != current_user:
+        flash("You do not have permission to edit this post", "danger")
+        return redirect(url_for('index'))
+    form = AddressForm()
+    if form.validate_on_submit():
+        #get the form data
+        new_address = form.address.data
+        #update the post
+        address.update(address=new_address)
+        flash(f"{address} has been updated", "success")
+        return redirect(url_for('get_address', address_id=address.id))
+    return render_template('edit_address.html', address=address, form=form)
+
+
+@app.route('/addresses/<address_id>/delete')
+@login_required
+def delete_address(address_id):
+    address = Address.query.get(address_id)
+    if not address:
+        flash(f"Address with {address_id} does not exist", "warning")
+        return redirect(url_for('index'))
+    if address.author != current_user:
+        flash('You do not have permission to delete this post', 'danger')
+        return redirect(url_for('index'))
+    address.delete()
+    flash(f"{address} has been deleted", 'info')
+    return redirect(url_for('index'))
