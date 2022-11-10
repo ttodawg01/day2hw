@@ -15,6 +15,10 @@ db = SQLAlchemy(app)
 login = LoginManager(app)
 login.login_view = 'login'
 
+#import api bluesprint
+from app.blueprints.api import api
+app.register_blueprint(api)
+
 migrate = Migrate(app, db, render_as_batch = True)
 
 from . import routes, models

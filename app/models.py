@@ -53,3 +53,12 @@ class Address(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
+
+    def to_dict(self):
+        address_dict = {
+            'id': self.id,
+            'address': self.address,
+            'date_created': self.date_created,
+            'user_id': self.user_id
+        }
+        return address_dict
